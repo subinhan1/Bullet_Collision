@@ -18,6 +18,7 @@ bullet_m = 1
 bullet_size = 10
 box_l = 40
 box_m = 5
+box_pos = (900, 400)
 
 def create_bullet(space):
     bullet = pymunk.Body(bullet_m, 50, body_type=pymunk.Body.DYNAMIC)
@@ -35,20 +36,24 @@ def draw_bullets(bullets):
       
         
       
-"""def create_box(space):
+def create_box(space):
     box = pymunk.Body(box_m, 100, body_type=pymunk.Body.DYNAMIC)
-    box.position = (900, 400)
-    vs = [(0,0), (0,box_l), (box_l, box_l), (box_l, 0)]
-    shape = pymunk.Poly(box, vs)
+    box.position = box_pos
+    shape = pymunk.Poly.create_box(box, (box_l, box_l))
     space.add(box, shape)
-    return shape"""
+    return shape
 
+def draw_boxes(boxes):
+    for b in boxes:
+        rect = pygame.Rect(box_pos, (box_l, box_l))
+        pygame.draw.rect(screen, (0,0,255), rect)
 
 
 
 bullets = []
 bullets.append(create_bullet(space))
 boxes = []
+boxes.append(create_box(space))
 
 
 while True:
@@ -59,6 +64,7 @@ while True:
             
     screen.fill((217, 217, 217))
     draw_bullets(bullets)
+    draw_boxes(boxes)
     space.step(0.02)
     pygame.display.update()
     clock.tick(60)
